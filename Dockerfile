@@ -1,11 +1,14 @@
-# Usa a imagem oficial do n8n
+# Usa a imagem oficial do n8n (Alpine)
 FROM n8nio/n8n:latest
 
-# Instala o ffmpeg dentro do container
+# vira root para instalar pacotes
 USER root
-RUN apt-get update \
- && apt-get install -y ffmpeg \
- && rm -rf /var/lib/apt/lists/*
 
-# Volta para o usuário padrão do n8n
+# instala ffmpeg no Alpine
+RUN apk add --no-cache ffmpeg
+
+# volta para o usuário padrão do n8n
 USER node
+
+EXPOSE 5678
+CMD ["n8n"]
